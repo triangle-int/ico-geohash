@@ -1,24 +1,27 @@
 {
-  "name": "@triangle-int/ico-geohash",
-  "version": "0.1.0",
-  "main": "index.js",
-  "repository": {
+	"name": "@triangle-int/ico-geohash",
+	"version": "0.1.0",
+	"main": "index.js",
+	"repository": {
 		"type": "git",
 		"url": "https://github.com/triangle-int/ico-geohash.git"
 	},
-  "license": "MIT",
-  "scripts": {
+	"license": "MIT",
+	"scripts": {
 		"build": "tsup",
 		"lint": "biome lint .",
 		"fmt": "biome format --write .",
 		"check": "tsc --noEmit",
 		"test": "vitest"
 	},
-  "devDependencies": {
+	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"ts-node": "^10.9.2",
 		"tsup": "^8.4.0",
 		"typescript": "^5.8.2",
 		"vitest": "^3.0.8"
+	},
+	"dependencies": {
+		"@triangle-int/geomath": "^0.1.2"
 	}
 }
