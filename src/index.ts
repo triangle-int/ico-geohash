@@ -7,24 +7,53 @@ import {
 } from "@triangle-int/geomath";
 import { type Triangle, center, findContaining, subdivide } from "./triangle";
 
-function vec2hashWithTris(
+function vec2triChainWithTris(
 	vec: Vector3,
 	tris: readonly Triangle[],
 	length: number,
-): string {
+): {
+	hash: string;
+	triangles: Triangle[];
+} {
 	if (length <= 0) {
-		return "";
+		return { hash: "", triangles: [] };
 	}
 
 	const index = findContaining(vec, tris);
-	const rest = vec2hashWithTris(vec, subdivide(tris[index]), length - 1);
-	return `${index}${rest}`;
+	const rest = vec2triChainWithTris(vec, subdivide(tris[index]), length - 1);
+	return {
+		hash: `${index}${rest.hash}`,
+		triangles: [tris[index], ...rest.triangles],
+	};
 }
 
-export function vec2Hash(vec: Vector3, length: number): string {
+export function vec2triChain(
+	vec: Vector3,
+	length: number,
+): {
+	hash: string;
+	triangles: Triangle[];
+} {
 	const first = findContaining(vec, triangles);
-	const rest = vec2hashWithTris(vec, subdivide(triangles[first]), length - 1);
-	return `${String.fromCharCode("a".charCodeAt(0) + first)}${rest}`;
+	const rest = vec2triChainWithTris(
+		vec,
+		subdivide(triangles[first]),
+		length - 1,
+	);
+	return {
+		hash: `${String.fromCharCode("a".charCodeAt(0) + first)}${rest.hash}`,
+		triangles: [triangles[first], ...rest.triangles],
+	};
+}
+
+export function coord2triChain(
+	coord: Coord,
+	length: number,
+): {
+	hash: string;
+	triangles: Triangle[];
+} {
+	return vec2triChain(coord2vec(coord), length);
 }
 
 function hash2vecWithTri(hash: string, tri: Triangle): Vector3 {
@@ -41,8 +70,12 @@ export function hash2vec(hash: string): Vector3 {
 	return hash2vecWithTri(hash.substring(1), triangles[index]);
 }
 
+export function vec2Hash(vec: Vector3, length: number): string {
+	return vec2triChain(vec, length).hash;
+}
+
 export function coord2hash(coord: Coord, length: number): string {
-	return vec2Hash(coord2vec(coord), length);
+	return coord2triChain(coord, length).hash;
 }
 
 export function hash2coord(hash: string): Coord {

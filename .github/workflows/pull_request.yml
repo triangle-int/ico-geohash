@@ -1,0 +1,26 @@
+name: Pull Request Lint and Test
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⏬ Checkout
+        uses: actions/checkout@v4
+      - name: 🔧 Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          registry-url: "https://registry.npmjs.org"
+      - name: 📥 Install Dependencies
+        run: npm install
+      - name: 🧪 Check
+        run: npm run check
+      - name: 🖊️ Lint
+        run: npm run lint
+      - name: 🧪 Test
+        run: npm run test
