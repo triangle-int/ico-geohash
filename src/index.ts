@@ -97,3 +97,5 @@ export function coord2hashAndCenter(
 		centered,
 	};
 }
+
+export * from "./triangle";
