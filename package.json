@@ -1,6 +1,6 @@
 {
 	"name": "@triangle-int/ico-geohash",
-	"version": "0.2.2",
+	"version": "0.2.3",
 	"module": "dist/index.mjs",
 	"types": "dist/index.d.mts",
 	"main": "dist/index.js",
@@ -37,6 +37,6 @@
 		"vitest": "^3.0.8"
 	},
 	"dependencies": {
-		"@triangle-int/geomath": "^0.2.1"
+		"@triangle-int/geomath": "^0.2.2"
 	}
 }
