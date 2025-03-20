@@ -37,6 +37,6 @@
 		"vitest": "^3.0.8"
 	},
 	"dependencies": {
-		"@triangle-int/geomath": "^0.2.1"
+		"@triangle-int/geomath": "^0.2.2"
 	}
 }
